@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <p>{{ info }} USD</p>
+    <p>{{ info }}</p>
   </div>
 </template>
 
@@ -16,9 +16,10 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then((response) => (this.info = response))
+    axios.get('http://localhost:8080/my_response').then((response) => {
+      console.log(response.data)
+      this.info = response
+    })
   }
 }
 </script>
