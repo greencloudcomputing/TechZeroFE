@@ -4,8 +4,8 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <!-- <header>
+    <img alt="Vue logo" class="logo" src="@/assets/greencloudlogo.svg" width="125" height="70" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
@@ -15,7 +15,8 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
+  
 
   <RouterView />
 </template>
