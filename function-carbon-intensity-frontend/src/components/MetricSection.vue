@@ -2,31 +2,32 @@
 import MetricItem from './MetricItem.vue'
 import Header from './Header.vue'
 
+const props = defineProps<{
+  data: {
+    ciTotal: number
+    cost: number
+    executionTime: number
+    electricityUsed: number
+  }
+}>()
 </script>
 
 <template>
-  <div class="header">
-    <Header>
-      <template #heading>GreenCloud Server Energy Reporting</template>
-    </Header>
-  </div>
-
   <div class="grid-container">
     <MetricItem>
       <template #icon>
         <DocumentationIcon />
       </template>
-      <template #heading>Total Time Taken</template>
-
-      Metric 1 placeholder
+      <template #heading>Total Execution Time</template>
+      <h1 class="metric">{{ props.data.executionTime }} s</h1>
     </MetricItem>
 
     <MetricItem>
       <template #icon>
         <ToolingIcon />
       </template>
-      <template #heading>Electricity Consumed</template>
-      Metric 2 placeholder
+      <template #heading>Total Electricity Consumed</template>
+      <h1 class="metric">{{ props.data.electricityUsed }} kWh</h1>
     </MetricItem>
 
     <MetricItem>
@@ -34,27 +35,29 @@ import Header from './Header.vue'
         <EcosystemIcon />
       </template>
       <template #heading>Total Cost</template>
-      Metric 3 placeholder
+      <h1 class="metric">{{ props.data.cost }} p</h1>
     </MetricItem>
 
     <MetricItem>
       <template #icon>
         <SupportIcon />
       </template>
-      <template #heading>Carbon Intensity</template>
-
-      Metric 4 placeholder
+      <template #heading>Total Carbon Intensity</template>
+      <h1 class="metric">{{ props.data.ciTotal }} g/kWh</h1>
     </MetricItem>
-
   </div>
-
 </template>
 
 <style>
+.metric {
+  font-size: 30px;
+  font-weight: 700;
+  font-style: bold;
+}
 .grid-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  padding: 20px;
+  gap: 20px;
+  margin: 20px;
 }
 </style>
-

@@ -1,6 +1,6 @@
 <template>
   <div class="card" style="position: relative; width: 100%">
-    <Chart type="line" :data="chartData" :height="300" :options="chartOptions" />
+    <Chart type="line" :data="chartData" :height="400" :options="chartOptions" />
   </div>
 </template>
 
@@ -8,10 +8,7 @@
 import { format } from 'date-fns'
 const props = defineProps<{
   data: {
-    carbonIntensity: string
-    // cost: number
-    // electricityUsed: string
-    // memoryUsed: string
+    powerUseage: number
     timestamp: string
   }[]
 }>()
@@ -28,46 +25,27 @@ onMounted(() => {
 const chartData = ref()
 const chartOptions = ref()
 
+console.log(props.data)
+
 const setChartData = () => {
   const documentStyle = getComputedStyle(document.documentElement)
 
   return {
     labels: props.data.map((element) => format(new Date(element.timestamp), 'dd/MM HH:mm')),
     datasets: [
-      //   {
-      //     label: 'Electricity used',
-      //     data: props.data.map((element) => element.electricityUsed),
-      //     fill: false,
-      //     borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-      //     tension: 0.4
-      //   },
       {
-        label: 'Carbon intensity',
-        data: props.data.map((element) => element.carbonIntensity),
+        label: 'Power usage',
+        data: props.data.map((element) => element.powerUseage),
         fill: false,
-        borderColor: documentStyle.getPropertyValue('--p-gray-500'),
+        borderColor: '#153759',
         tension: 0.4
       }
-      //   {
-      //     label: 'Cost',
-      //     data: props.data.map((element) => element.cost),
-      //     fill: false,
-      //     borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-      //     tension: 0.4
-      //   },
-      //   {
-      //     label: 'Memory used',
-      //     data: props.data.map((element) => element.memoryUsed),
-      //     fill: false,
-      //     borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-      //     tension: 0.4
-      //   }
     ]
   }
 }
 const setChartOptions = () => {
   const documentStyle = getComputedStyle(document.documentElement)
-  const textColor = documentStyle.getPropertyValue('--p-text-color')
+  const textColor = '#153759'
   const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color')
   const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color')
 
@@ -76,9 +54,14 @@ const setChartOptions = () => {
     aspectRatio: 0.6,
     plugins: {
       legend: {
-        labels: {
-          color: textColor
-        }
+        display: false
+      },
+      title: {
+        display: true,
+        font: {
+          size: 20
+        },
+        text: 'Power usage [W]'
       }
     },
     scales: {
