@@ -5,12 +5,13 @@
 </template>
 
 <script setup lang="ts">
+import { format } from 'date-fns'
 const props = defineProps<{
   data: {
     carbonIntensity: string
-    cost: number
-    electricityUsed: string
-    memoryUsed: string
+    // cost: number
+    // electricityUsed: string
+    // memoryUsed: string
     timestamp: string
   }[]
 }>()
@@ -31,36 +32,36 @@ const setChartData = () => {
   const documentStyle = getComputedStyle(document.documentElement)
 
   return {
-    labels: props.data.map((element) => element.timestamp),
+    labels: props.data.map((element) => format(new Date(element.timestamp), 'dd/MM HH:mm')),
     datasets: [
-      {
-        label: 'Electricity used',
-        data: props.data.map((element) => element.electricityUsed),
-        fill: false,
-        borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-        tension: 0.4
-      },
+      //   {
+      //     label: 'Electricity used',
+      //     data: props.data.map((element) => element.electricityUsed),
+      //     fill: false,
+      //     borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+      //     tension: 0.4
+      //   },
       {
         label: 'Carbon intensity',
         data: props.data.map((element) => element.carbonIntensity),
         fill: false,
         borderColor: documentStyle.getPropertyValue('--p-gray-500'),
         tension: 0.4
-      },
-      {
-        label: 'Cost',
-        data: props.data.map((element) => element.cost),
-        fill: false,
-        borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-        tension: 0.4
-      },
-      {
-        label: 'Memory used',
-        data: props.data.map((element) => element.memoryUsed),
-        fill: false,
-        borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
-        tension: 0.4
       }
+      //   {
+      //     label: 'Cost',
+      //     data: props.data.map((element) => element.cost),
+      //     fill: false,
+      //     borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+      //     tension: 0.4
+      //   },
+      //   {
+      //     label: 'Memory used',
+      //     data: props.data.map((element) => element.memoryUsed),
+      //     fill: false,
+      //     borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+      //     tension: 0.4
+      //   }
     ]
   }
 }
