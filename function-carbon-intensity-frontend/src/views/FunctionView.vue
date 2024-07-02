@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MetricSection from '../components/MetricSection.vue'
 import CIChart from '../components/charts/CIChart.vue'
 import PowerUsageChart from '../components/charts/PowerUsageChart.vue'
 import Header from '../components/Header.vue'
@@ -56,7 +57,7 @@ fetchData()
     <Header> </Header>
     <div class="functionContainer">
       <h2>Tech Zero x Kraken Hackathon function</h2>
-      <p>667aa0c384809f8a29ddc2f9</p>
+      <p>ID: 667aa0c384809f8a29ddc2f9</p>
     </div>
     <div class="timeSelectContainer">
       <div class="pickerContainer">
@@ -72,18 +73,22 @@ fetchData()
         </div>
       </div>
     </div>
+
     <section v-if="errored">
       <p>Something went wrong :(</p>
     </section>
     <section class="graphSection" v-else>
       <div v-if="loading">Loading...</div>
 
-      <div class="chartsContainer" v-else>
-        <div class="chartContainer">
-          <CIChart :data="camelCaseKeys(data.ciPerMinute)" />
-        </div>
-        <div class="chartContainer">
-          <PowerUsageChart :data="camelCaseKeys(data.ciPerMinute)" />
+      <div v-else>
+        <MetricSection :data="camelCaseKeys(data)" />
+        <div class="chartsContainer">
+          <div class="chartContainer">
+            <CIChart :data="camelCaseKeys(data.ciPerMinute)" />
+          </div>
+          <div class="chartContainer">
+            <PowerUsageChart :data="camelCaseKeys(data.ciPerMinute)" />
+          </div>
         </div>
       </div>
     </section>

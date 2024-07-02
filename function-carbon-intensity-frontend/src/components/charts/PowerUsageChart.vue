@@ -1,6 +1,6 @@
 <template>
   <div class="card" style="position: relative; width: 100%">
-    <Chart type="line" :data="chartData" :height="300" :options="chartOptions" />
+    <Chart type="line" :data="chartData" :height="400" :options="chartOptions" />
   </div>
 </template>
 
@@ -37,7 +37,7 @@ const setChartData = () => {
         label: 'Power usage',
         data: props.data.map((element) => element.powerUseage),
         fill: false,
-        borderColor: documentStyle.getPropertyValue('--p-gray-500'),
+        borderColor: '#153759',
         tension: 0.4
       }
     ]
@@ -45,7 +45,7 @@ const setChartData = () => {
 }
 const setChartOptions = () => {
   const documentStyle = getComputedStyle(document.documentElement)
-  const textColor = documentStyle.getPropertyValue('--p-text-color')
+  const textColor = '#153759'
   const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color')
   const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color')
 
@@ -54,9 +54,14 @@ const setChartOptions = () => {
     aspectRatio: 0.6,
     plugins: {
       legend: {
-        labels: {
-          color: textColor
-        }
+        display: false
+      },
+      title: {
+        display: true,
+        font: {
+          size: 20
+        },
+        text: 'Power usage [W]'
       }
     },
     scales: {

@@ -1,6 +1,6 @@
 <template>
   <div class="card" style="position: relative; width: 100%">
-    <Chart type="line" :data="chartData" :height="300" :options="chartOptions" />
+    <Chart type="line" :data="chartData" :height="400" :options="chartOptions" />
   </div>
 </template>
 
@@ -37,7 +37,7 @@ const setChartData = () => {
         label: 'Carbon intensity',
         data: props.data.map((element) => element.carbonIntensity),
         fill: false,
-        borderColor: documentStyle.getPropertyValue('--p-gray-500'),
+        borderColor: '#1FCCCC', // documentStyle.getPropertyValue('--p-gray-500'),
         tension: 0.4
       }
     ]
@@ -54,9 +54,14 @@ const setChartOptions = () => {
     aspectRatio: 0.6,
     plugins: {
       legend: {
-        labels: {
-          color: textColor
-        }
+        display: false
+      },
+      title: {
+        display: true,
+        font: {
+          size: 20
+        },
+        text: 'Carbon Intensity [g/kWh]'
       }
     },
     scales: {
