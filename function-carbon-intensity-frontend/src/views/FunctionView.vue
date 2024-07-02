@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import TimeseriesChart from '../components/charts/TimeseriesChart.vue'
+import CIChart from '../components/charts/CIChart.vue'
+import PowerUsageChart from '../components/charts/PowerUsageChart.vue'
 import Header from '../components/Header.vue'
 
 import { ref, watch } from 'vue'
@@ -32,6 +33,7 @@ const fetchData = () => {
       `http://localhost:8080/energy?from=${startDate.value.toISOString()}&to=${endDate.value.toISOString()}&functionId=667aa0c384809f8a29ddc2f9`
     )
     .then((response) => {
+      console.log(response)
       data.value = camelCaseKeys(response.data)
     })
     .catch((error) => {
@@ -53,7 +55,7 @@ fetchData()
   <div class="functionView">
     <Header> </Header>
     <div class="functionContainer">
-      <h1>My favourite function</h1>
+      <h2>Tech Zero x Kraken Hackathon function</h2>
       <p>667aa0c384809f8a29ddc2f9</p>
     </div>
     <div class="timeSelectContainer">
@@ -76,8 +78,13 @@ fetchData()
     <section class="graphSection" v-else>
       <div v-if="loading">Loading...</div>
 
-      <div class="chartContainer" v-else>
-        <TimeseriesChart :data="data" />
+      <div class="chartsContainer" v-else>
+        <div class="chartContainer">
+          <CIChart :data="camelCaseKeys(data.ciPerMinute)" />
+        </div>
+        <div class="chartContainer">
+          <PowerUsageChart :data="camelCaseKeys(data.ciPerMinute)" />
+        </div>
       </div>
     </section>
   </div>
@@ -93,6 +100,14 @@ fetchData()
 .chartContainer {
   background-color: white;
   border-radius: 10px;
+  width: 50%;
+}
+
+.chartsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-items: flex-start;
   margin: 20px;
 }
 
@@ -100,7 +115,7 @@ fetchData()
   background-color: white;
   display: flex;
   gap: 20px;
-  padding: 5px;
+  padding: 10px;
   padding-left: 20px;
   border-bottom: 1px solid rgb(222, 222, 222);
   flex: content;
@@ -115,8 +130,8 @@ fetchData()
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* gap: 10px; */
   background-color: white;
+  padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
   border-bottom: 1px solid rgb(222, 222, 222);
