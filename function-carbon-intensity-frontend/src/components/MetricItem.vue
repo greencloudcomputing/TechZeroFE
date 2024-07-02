@@ -15,18 +15,25 @@
     display: flex;
     position: relative;
   } */
+
+  .item {
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+  }
   
   .details {
     flex: 1;
     margin-left: 1rem;
-    color: white;
+    /* color: white; */
   }
   
   h3 {
     font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 0.4rem;
-    color: white;
+    /* color: white; */
   }
   
   /* @media (min-width: 1024px) {
