@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TimeseriesChart from '../components/charts/TimeseriesChart.vue'
+import Header from '../components/Header.vue'
 
 import { ref, watch } from 'vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
@@ -50,15 +51,19 @@ fetchData()
 
 <template>
   <div class="functionView">
-    <header><h1>My favourite function - 667aa0c384809f8a29ddc2f9</h1></header>
+    <Header> </Header>
+    <div class="functionContainer">
+      <h1>My favourite function</h1>
+      <p>667aa0c384809f8a29ddc2f9</p>
+    </div>
     <div class="timeSelectContainer">
-      <div>
+      <div class="pickerContainer">
         Start date
         <div class="datePickerContainer">
           <VueDatePicker v-model="startDate" :format="dateFormat"></VueDatePicker>
         </div>
       </div>
-      <div>
+      <div class="pickerContainer">
         End date
         <div class="datePickerContainer">
           <VueDatePicker v-model="endDate" :format="dateFormat"></VueDatePicker>
@@ -79,18 +84,24 @@ fetchData()
 </template>
 
 <style>
+.pickerContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .chartContainer {
   background-color: white;
   border-radius: 10px;
-  margin: 10px;
+  margin: 20px;
 }
 
 .timeSelectContainer {
   background-color: white;
   display: flex;
-  gap: 5px;
-  padding: 10px;
-  padding-top: 5px;
+  gap: 20px;
+  padding: 5px;
+  padding-left: 20px;
   border-bottom: 1px solid rgb(222, 222, 222);
   flex: content;
   flex-direction: row;
@@ -100,9 +111,14 @@ fetchData()
   width: 200px;
 }
 
-header {
+.functionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 10px; */
   background-color: white;
-  padding-left: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   border-bottom: 1px solid rgb(222, 222, 222);
 }
 </style>
