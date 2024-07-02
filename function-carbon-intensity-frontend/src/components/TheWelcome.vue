@@ -16,7 +16,7 @@ import Header from './Header.vue'
       <template #icon>
         <DocumentationIcon />
       </template>
-      <template #heading>Metric 1 placeholder</template>
+      <template #heading>Total Time Taken</template>
 
       Metric 1 placeholder
     </MetricItem>
@@ -25,7 +25,7 @@ import Header from './Header.vue'
       <template #icon>
         <ToolingIcon />
       </template>
-      <template #heading>Metric 2 placeholder</template>
+      <template #heading>Electricity Consumed</template>
       Metric 2 placeholder
     </MetricItem>
 
@@ -33,7 +33,7 @@ import Header from './Header.vue'
       <template #icon>
         <EcosystemIcon />
       </template>
-      <template #heading>Metric 3 placeholder</template>
+      <template #heading>Total Cost</template>
       Metric 3 placeholder
     </MetricItem>
 
@@ -41,7 +41,7 @@ import Header from './Header.vue'
       <template #icon>
         <SupportIcon />
       </template>
-      <template #heading>Metric 4 placeholder</template>
+      <template #heading>Carbon Intensity</template>
 
       Metric 4 placeholder
     </MetricItem>
@@ -54,6 +54,7 @@ import Header from './Header.vue'
 .grid-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  padding: 20px;
 }
 </style>
 
