@@ -11,9 +11,15 @@
       </div>
     </header>
   </template>
+
+<script>
+export default {
+  name: 'AppHeader',
+ 
+};
+</script>
   
   <style>
-  /* Basic header styles */
   .header {
     display: flex;
     align-items: center;
@@ -22,16 +28,18 @@
     padding: 0.5rem 2rem;
     justify-content: space-between;
   }
+
+  .heading {
+    margin: 0; /* Remove default margin */
+    /* Additional styling for the title */
+  }
   
   .logo-container {
     /* position: right; */
   }
-
-  .content-container {
-    flex-grow: 1;
-  }
   
   .logo {
+    padding-left: 50rem;
     height: 50px;
     width: auto;
   }
