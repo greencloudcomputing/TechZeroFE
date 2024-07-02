@@ -1,53 +1,73 @@
 <script setup lang="ts">
 import TimeseriesChart from '../components/charts/TimeseriesChart.vue'
+import Header from '../components/Header.vue'
 
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import { startOfDay } from 'date-fns'
 
-const startDate = ref()
-const endDate = ref()
-</script>
-
-<script lang="ts">
 import axios from 'axios'
 import camelCaseKeys from 'camelcase-keys'
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      data: null,
-      loading: true,
-      errored: false
-    }
-  },
-  mounted() {
-    axios
-      .get('http://localhost:8080/my_response')
-      .then((response) => {
-        this.data = camelCaseKeys(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => (this.loading = false))
+const now = new Date()
+const startDate = ref(startOfDay(now))
+const endDate = ref(now)
+const dateFormat = 'dd/MM/yyyy HH:mm'
+
+const data = ref(null)
+const loading = ref(true)
+const errored = ref(false)
+
+const fetchData = () => {
+  if (startDate.value >= endDate.value) {
+    return
   }
+
+  loading.value = true
+  errored.value = false
+
+  axios
+    .get(
+      `http://localhost:8080/energy?from=${startDate.value.toISOString()}&to=${endDate.value.toISOString()}&functionId=667aa0c384809f8a29ddc2f9`
+    )
+    .then((response) => {
+      data.value = camelCaseKeys(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+      errored.value = true
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
+
+watch([startDate, endDate], fetchData)
+
+// Fetch initial data
+fetchData()
 </script>
 
 <template>
   <div class="functionView">
-    <header><h1>My favourite function</h1></header>
+    <Header> </Header>
+    <div class="functionContainer">
+      <h1>My favourite function</h1>
+      <p>667aa0c384809f8a29ddc2f9</p>
+    </div>
     <div class="timeSelectContainer">
-      <div>
+      <div class="pickerContainer">
         Start date
-        <div class="datePickerContainer"><VueDatePicker v-model="startDate"></VueDatePicker></div>
+        <div class="datePickerContainer">
+          <VueDatePicker v-model="startDate" :format="dateFormat"></VueDatePicker>
+        </div>
       </div>
-      <div>
+      <div class="pickerContainer">
         End date
-        <div class="datePickerContainer"><VueDatePicker v-model="endDate"></VueDatePicker></div>
+        <div class="datePickerContainer">
+          <VueDatePicker v-model="endDate" :format="dateFormat"></VueDatePicker>
+        </div>
       </div>
     </div>
     <section v-if="errored">
@@ -57,25 +77,31 @@ export default {
       <div v-if="loading">Loading...</div>
 
       <div class="chartContainer" v-else>
-        <TimeseriesChart :data="camelCaseKeys(data.timeseries)" />
+        <TimeseriesChart :data="data" />
       </div>
     </section>
   </div>
 </template>
 
 <style>
+.pickerContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .chartContainer {
   background-color: white;
   border-radius: 10px;
-  margin: 10px;
+  margin: 20px;
 }
 
 .timeSelectContainer {
   background-color: white;
   display: flex;
-  gap: 5px;
-  padding: 10px;
-  padding-top: 5px;
+  gap: 20px;
+  padding: 5px;
+  padding-left: 20px;
   border-bottom: 1px solid rgb(222, 222, 222);
   flex: content;
   flex-direction: row;
@@ -85,9 +111,14 @@ export default {
   width: 200px;
 }
 
-header {
+.functionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 10px; */
   background-color: white;
-  padding-left: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   border-bottom: 1px solid rgb(222, 222, 222);
 }
 </style>
